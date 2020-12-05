@@ -10,5 +10,6 @@ setup(
     author_email="klugh@ethz.ch",
     url="https://github.com/Jimmy2027/ANDREW",
     keywords=["telegram-bot"],
-    scripts=['bin/norby']
+    scripts=['bin/norby'],
+    install_requires=['requests']
 )
