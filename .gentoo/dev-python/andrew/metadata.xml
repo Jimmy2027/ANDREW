@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>klugh@student.ethz.ch</email>
+		<name>Hendrik Klug</name>
+	</maintainer>
+	<longdescription lang="en">
+		MLEBE (Machine Learning Enabled Brain Extraction) is a python package for both the training of a 3D Unet for
+		segmentation and its integration into the SAMRI workflow.
+	</longdescription>
+	<use>
+		<flag name="training">Use models required for training the classifier.</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">Jimmy2027/MLEBE</remote-id>
+	</upstream>
+</pkgmetadata>
