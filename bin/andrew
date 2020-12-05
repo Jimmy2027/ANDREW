@@ -7,6 +7,7 @@ import configparser
 import requests
 from pathlib import Path
 import os
+import warnings
 
 # Reading the config
 config_path = Path(os.path.expanduser('~/.config/andrew_config.ini'))
@@ -26,7 +27,9 @@ def send_msg(message):
     token = config['telegram_bot']['token']
     chat_id = config['telegram_bot']['chat_id']
     url_req = f'https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}'
-    requests.get(url_req)
+    result = requests.get(url_req)
+    if result == '<Response [404]>':
+        warnings.warn(f'Could not contact Andrew, error: {result} \n url_req: {url_req}')
 
 
 start_time = time.time()
