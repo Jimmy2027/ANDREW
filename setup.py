@@ -11,5 +11,6 @@ setup(
     url="https://github.com/Jimmy2027/ANDREW",
     keywords=["telegram-bot"],
     scripts=['bin/norby'],
-    install_requires=['requests']
+    install_requires=['requests'],
+    python_requires='>=3.7',
 )
