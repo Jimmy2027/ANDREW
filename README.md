@@ -1,2 +1,15 @@
 # NORBY
-Get notified via a telegram bot when your bash command finished
+Get notified via a telegram bot when your bash command finished.
+
+# Installation
+### Via pip:
+```
+pip install norby
+```
+# Setup:
+- Install `norby` 
+- Create bot in telegram by messaging `BotFather` with `/newbot` to receive the bot ID
+- write `/start` to new bot to start it
+- write something to new bot and go to https://api.telegram.org/bot<token>/getUpdates to get the chat_id
+- fill token and chat_id in the `norby_config.ini`
+- move the config to `~/.config/norby_config.ini`
