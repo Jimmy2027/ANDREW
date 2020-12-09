@@ -2,6 +2,11 @@
 Get notified via a telegram bot when your bash command finished.
 
 # Installation
+###Via portage:
+The package is available via the [Chymeric Overlay](https://github.com/TheChymera/overlay):
+```
+emerge norby
+```
 ### Via pip:
 ```
 pip install norby
