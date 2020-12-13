@@ -2,11 +2,11 @@
 
 import argparse
 import configparser
+import subprocess
 import sys
 import time
 import warnings
 from pathlib import Path
-from subprocess import PIPE, Popen
 
 import requests
 
@@ -36,15 +36,11 @@ def send_msg(message):
 start_time = time.time()
 print(f'executing command {input.command}')
 try:
-    process = Popen(input.command, stdout=PIPE, stderr=PIPE, shell=True)
-    stdout, stderr = process.communicate()
-    process.wait()
-    print(stderr)
-    # output = subprocess.check_output(input.command, shell=True)
+    output = subprocess.check_output(input.command, shell=True)
     duration = time.time() - start_time
     message = f'Job {input.command} at {config["other"]["loc_name"]} just finished. ' \
               f'It took {duration} seconds or {duration // 60} minutes. \n ' \
-              f'The output is: \n\n {stdout.rstrip()}'
+              f'The output is: \n\n {output.rstrip()}'
 except:
     e = sys.exc_info()[0]
     duration = time.time() - start_time
