@@ -3,11 +3,11 @@
 import argparse
 import configparser
 import subprocess
+import subprocess_tee
 import sys
 import time
 import warnings
 from pathlib import Path
-
 import requests
 
 # Reading the config
@@ -36,14 +36,14 @@ def send_msg(message):
 start_time = time.time()
 print(f'executing command {input.command}')
 try:
-    output = subprocess.check_output(input.command, shell=True)
-    output = output.rstrip()
+    output = subprocess_tee.run(input.command, shell=True)
+    output = output.stdout
     duration = time.time() - start_time
     message = f'Job {input.command} at {config["other"]["loc_name"]} just finished. ' \
               f'It took {duration} seconds or {duration // 60} minutes. \n '
 
     # Telegram limits the message length to 4096 characters
-    if len(output) > 4095 and config['other']['ppb']:
+    if len(output) > 4095 and config.getboolean('other', 'ppb'):
         import tempfile
         import os
 
