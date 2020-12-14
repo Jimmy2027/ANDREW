@@ -50,7 +50,7 @@ try:
         with tempfile.TemporaryDirectory() as tmpdirname:
             file_path = Path(tmpdirname) / 'tempfile.txt'
             with open(file_path, mode='w') as f:
-                f.write(message)
+                f.write(output)
             ppb_output = str(subprocess.check_output(f'ppb {file_path}', shell=True).rstrip())
         for substr in ppb_output.split():
             if substr.startswith('http'):
