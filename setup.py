@@ -8,9 +8,9 @@ setup(
     description="Communication via telegram bot when bash command finishes executing",
     author="Hendrik Klug",
     author_email="klugh@ethz.ch",
-    url="https://github.com/Jimmy2027/ANDREW",
+    url="https://github.com/Jimmy2027/NORBY",
     keywords=["telegram-bot"],
     scripts=['bin/norby'],
-    install_requires=['requests'],
+    install_requires=['requests', 'subprocess-tee'],
     python_requires='>=3.7',
 )
