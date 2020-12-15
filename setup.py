@@ -10,7 +10,10 @@ setup(
     author_email="klugh@ethz.ch",
     url="https://github.com/Jimmy2027/NORBY",
     keywords=["telegram-bot"],
-    scripts=['bin/norby'],
+    packages= ["norby"],
+    entry_points={
+        "console_scripts": ["norby = norby.__main__:main"]
+    },
     install_requires=['requests', 'subprocess-tee'],
     python_requires='>=3.7',
 )
