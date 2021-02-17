@@ -1,22 +1,17 @@
 # HK, 15.12.20
 import argparse
-import configparser
 import subprocess
 import sys
 import time
 from pathlib import Path
-from utils import send_msg
+
 import subprocess_tee
+
+from utils import send_msg, get_config
 
 
 def main():
-    # Reading the config
-    config_path = Path('~/.config/norby_config.ini').expanduser()
-    assert config_path.exists(), f'Config file not found under {config_path}. ' \
-                                 f'Please fill the example under config and move it to {config_path}.'
-
-    config = configparser.ConfigParser()
-    config.read(config_path)
+    config = get_config()
 
     # parsing the arguments
     parser = argparse.ArgumentParser()
