@@ -7,7 +7,7 @@ from pathlib import Path
 
 import subprocess_tee
 
-from utils import send_msg, get_config
+from .utils import send_msg, get_config
 
 
 def main():
