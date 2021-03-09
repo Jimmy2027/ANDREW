@@ -1,5 +1,5 @@
 # NORBY
-Get notified via a telegram bot when your bash command finished.
+Get notified via a telegram bot when your bash command finished via the command line or from any python code.
 
 # Installation
 ### Via portage:

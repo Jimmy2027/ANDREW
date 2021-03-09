@@ -11,6 +11,9 @@ from .utils import send_msg, get_config
 
 
 def main():
+    """
+    Execute input command and send output to telegram bot.
+    """
     config = get_config()
 
     # parsing the arguments

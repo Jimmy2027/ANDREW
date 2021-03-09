@@ -20,6 +20,11 @@ def get_config():
 
 
 def send_msg(message: str, config=None):
+    """
+    Send message to telegram chat bot.
+
+    message str: text message to be sent to the chat bot.
+    """
     if not config:
         config = get_config()
     token = config['telegram_bot']['token']
