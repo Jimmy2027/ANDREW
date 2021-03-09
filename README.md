@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/Jimmy2027/NORBY.svg?branch=main)](https://travis-ci.com/Jimmy2027/NORBY)
+[![Documentation Status](https://readthedocs.org/projects/norby/badge/?version=latest)](https://norby.readthedocs.io/en/latest/?badge=latest)
+
 # NORBY
 Get notified via a telegram bot when your bash command finished via the command line or from any python code.
 
