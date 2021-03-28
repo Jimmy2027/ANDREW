@@ -4,6 +4,21 @@
 # NORBY
 Get notified via a telegram bot when your bash command finished via the command line or from any python code.
 
+# Usage
+```console
+user@host $ norby "echo hi"
+executing command echo hi
+hi
+
+user@host $ norby ./broken_workflow.sh
+your job got killed with: some_error
+```
+````python
+from norby import send_msg
+results = run_very_long_workflow()
+send_msg(f'Very long workflow finished. The results are: {results}.')
+````
+
 # Installation
 ### Via portage:
 The package is available via the [Chymeric Overlay](https://github.com/TheChymera/overlay):
