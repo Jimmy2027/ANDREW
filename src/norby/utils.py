@@ -1,10 +1,50 @@
-# HK, 15.12.20
-
-import warnings
-from pathlib import Path
 import configparser
+import warnings
+from contextlib import contextmanager
+from pathlib import Path
+from time import time
 
 import requests
+
+
+def get_readable_elapsed_time(elapsed_time: float, start_msg: str = None) -> str:
+    nbr_days = elapsed_time // (60 * 60 * 24)
+    nbr_hours = elapsed_time // (60 * 60)
+    nbr_minutes = elapsed_time // 60
+
+    t = start_msg or 'The run took '
+    if nbr_days > 3:
+        return t + f'{nbr_days} days.'
+    elif nbr_hours > 1:
+        return t + f'{nbr_hours} hours.'
+    elif nbr_minutes > 1:
+        return t + f'{nbr_minutes} minutes.'
+    else:
+        return t + f'{elapsed_time} seconds.'
+
+
+@contextmanager
+def norby(start_message: str = None, end_message: str = None) -> None:
+    """
+    Context that alerts when context starts, finishes and reports errors.
+    """
+    start_message = start_message or 'Starting workflow.'
+
+    send_msg(start_message, True)
+    try:
+        start_time = time()
+        yield
+        elapsed_time = time() - start_time
+        time_msg = get_readable_elapsed_time(elapsed_time)
+        end_message = end_message or 'Workflow just finished.'
+        end_message = ' '.join([end_message, time_msg])
+        send_msg(end_message, True)
+    except Exception as e:
+        elapsed_time = time() - start_time
+        time_msg = get_readable_elapsed_time(elapsed_time, 'It lived for ')
+        error_message = f'Workflow failed. {time_msg}. Sorry for your loss. \n\n {e}'
+        send_msg(error_message, True)
+        raise e
 
 
 def get_config_path() -> Path:
@@ -42,3 +82,9 @@ def send_msg(message: str, add_loc_name: bool = False):
     result = requests.get(url_req)
     if result == '<Response [404]>':
         warnings.warn(f'Could not contact Norby, error: {result} \n url_req: {url_req}')
+
+
+if __name__ == '__main__':
+    with norby("List Comprehension Example"):
+        s = [x for x in range(10_000_000)]
+        assert False
