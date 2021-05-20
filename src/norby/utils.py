@@ -90,6 +90,9 @@ def send_msg(message: str, add_loc_name: bool = False, whichbot: str = None):
         whichbot = 'default'
 
     config = get_config()
+    if f'telegram_bot.{whichbot}' not in config:
+        warnings.warn(f'Bot {whichbot} was not found in config. Using default bot.')
+        whichbot = 'default'
     token = config[f'telegram_bot.{whichbot}']['token']
     chat_id = config[f'telegram_bot.{whichbot}']['chat_id']
     if add_loc_name:
@@ -101,5 +104,5 @@ def send_msg(message: str, add_loc_name: bool = False, whichbot: str = None):
 
 
 if __name__ == '__main__':
-    with maybe_norby(True, "List Comprehension Example", whichbot='mlebe'):
+    with maybe_norby(True, "List Comprehension Example", whichbot='sdfgh'):
         s = [x for x in range(10_000_000)]
