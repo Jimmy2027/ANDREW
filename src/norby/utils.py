@@ -25,13 +25,13 @@ def get_readable_elapsed_time(elapsed_time: float, start_msg: str = None) -> str
 
 
 @contextmanager
-def norby(start_message: str = None, end_message: str = None) -> None:
+def norby(start_message: str = None, end_message: str = None, whichbot: str = None) -> None:
     """
     Context that alerts when context starts, finishes and reports errors.
     """
     start_message = start_message or 'Starting workflow.'
 
-    send_msg(start_message, True)
+    send_msg(start_message, True, whichbot)
     try:
         start_time = time()
         yield
@@ -39,22 +39,22 @@ def norby(start_message: str = None, end_message: str = None) -> None:
         time_msg = get_readable_elapsed_time(elapsed_time)
         end_message = end_message or 'Workflow just finished.'
         end_message = ' '.join([end_message, time_msg])
-        send_msg(end_message, True)
+        send_msg(end_message, True, whichbot)
     except Exception as e:
         elapsed_time = time() - start_time
         time_msg = get_readable_elapsed_time(elapsed_time, 'It lived for ')
         error_message = f'Workflow failed. {time_msg}. Sorry for your loss. \n\n {e}'
-        send_msg(error_message, True)
+        send_msg(error_message, True, whichbot)
         raise e
 
 
 @contextmanager
-def maybe_norby(use_norby: bool, start_message: str = None, end_message: str = None) -> None:
+def maybe_norby(use_norby: bool, start_message: str = None, end_message: str = None, whichbot: str = None) -> None:
     """Norby contextmanager that uses the norby contextmanager if use_norby is True."""
     if not use_norby:
         yield
     else:
-        with norby(start_message, end_message):
+        with norby(start_message, end_message, whichbot=whichbot):
             yield
 
 
@@ -76,17 +76,22 @@ def get_config():
     return config
 
 
-def send_msg(message: str, add_loc_name: bool = False):
+def send_msg(message: str, add_loc_name: bool = False, whichbot: str = None):
     """
     Send message to telegram chat bot.
 
     message str: text message to be sent to the chat bot.$
     add_loc_name: boolean indicating if the loc_name information should be added to the message. If true the string
-    "From {config["other"]["loc_name"]}" will be added at the beginning of the message.
+        "From {config["other"]["loc_name"]}" will be added at the beginning of the message.
+    whichbot str: name of the bot that is to be used to send the message. Defaults to "default".
+        See example config under config/norby_config.ini for more info.
     """
+    if not whichbot:
+        whichbot = 'default'
+
     config = get_config()
-    token = config['telegram_bot']['token']
-    chat_id = config['telegram_bot']['chat_id']
+    token = config[f'telegram_bot.{whichbot}']['token']
+    chat_id = config[f'telegram_bot.{whichbot}']['chat_id']
     if add_loc_name:
         message = f'From {config["other"]["loc_name"]}: ' + message
     url_req = f'https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}'
@@ -96,6 +101,5 @@ def send_msg(message: str, add_loc_name: bool = False):
 
 
 if __name__ == '__main__':
-    with norby("List Comprehension Example"):
+    with maybe_norby(True, "List Comprehension Example", whichbot='mlebe'):
         s = [x for x in range(10_000_000)]
-        assert False
