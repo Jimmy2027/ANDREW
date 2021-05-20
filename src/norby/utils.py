@@ -80,11 +80,11 @@ def send_msg(message: str, add_loc_name: bool = False, whichbot: str = None):
     """
     Send message to telegram chat bot.
 
-    message str: text message to be sent to the chat bot.$
+    message str: text message to be sent to the chat bot.
     add_loc_name: boolean indicating if the loc_name information should be added to the message. If true the string
-        "From {config["other"]["loc_name"]}" will be added at the beginning of the message.
+    "From {config["other"]["loc_name"]}" will be added at the beginning of the message.
     whichbot str: name of the bot that is to be used to send the message. Defaults to "default".
-        See example config under config/norby_config.ini for more info.
+    See example config under config/norby_config.ini for more info.
     """
     if not whichbot:
         whichbot = 'default'
