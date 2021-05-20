@@ -4,13 +4,14 @@ from contextlib import contextmanager
 from pathlib import Path
 from time import time
 
+import numpy as np
 import requests
 
 
 def get_readable_elapsed_time(elapsed_time: float, start_msg: str = None) -> str:
-    nbr_days = elapsed_time // (60 * 60 * 24)
-    nbr_hours = elapsed_time // (60 * 60)
-    nbr_minutes = elapsed_time // 60
+    nbr_days = np.round(elapsed_time / (60 * 60 * 24), 5)
+    nbr_hours = np.round(elapsed_time / (60 * 60), 5)
+    nbr_minutes = np.round(elapsed_time / 60, 5)
 
     t = start_msg or 'The run took '
     if nbr_days > 3:
@@ -45,6 +46,16 @@ def norby(start_message: str = None, end_message: str = None) -> None:
         error_message = f'Workflow failed. {time_msg}. Sorry for your loss. \n\n {e}'
         send_msg(error_message, True)
         raise e
+
+
+@contextmanager
+def maybe_norby(use_norby: bool, start_message: str = None, end_message: str = None) -> None:
+    """Norby contextmanager that uses the norby contextmanager if use_norby is True."""
+    if not use_norby:
+        yield
+    else:
+        with norby(start_message, end_message):
+            yield
 
 
 def get_config_path() -> Path:
