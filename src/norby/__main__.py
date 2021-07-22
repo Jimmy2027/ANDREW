@@ -1,4 +1,3 @@
-# HK, 15.12.20
 import argparse
 import subprocess
 import sys
